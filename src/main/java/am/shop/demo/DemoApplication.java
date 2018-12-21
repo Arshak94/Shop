@@ -8,7 +8,8 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-        System.out.println("Lesson");
+        //axper mi hat pull ara to ga heto nor check out
+        System.out.println("Hii World");
     }
 
 }
