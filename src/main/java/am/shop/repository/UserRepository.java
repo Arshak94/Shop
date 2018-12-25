@@ -1,10 +1,10 @@
 package am.shop.repository;
 
-import am.shop.entity.Users;
+import am.shop.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<Users, Long> {
+import java.util.Optional;
 
-       Users getOne(Long id);
-
+public interface UserRepository extends JpaRepository<User, Long> {
+       Optional<User> findByEmail(String email);
 }

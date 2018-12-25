@@ -1,4 +1,4 @@
-package am.shop.entity;
+package am.shop.model;
 
 import lombok.ToString;
 

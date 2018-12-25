@@ -1,10 +1,11 @@
-package am.shop.model.client_response;
+package am.shop.response;
 
-import am.shop.model.client_request.RequestUser;
+import lombok.Builder;
 
 import java.util.Date;
 import java.util.Objects;
 
+@Builder
 public class ResponseUser {
 
     private String firstName;
@@ -109,45 +110,5 @@ public class ResponseUser {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ResponseUser that = (ResponseUser) o;
-        return Objects.equals(firstName, that.firstName) &&
-                Objects.equals(lastName, that.lastName) &&
-                Objects.equals(email, that.email) &&
-                Objects.equals(password, that.password) &&
-                Objects.equals(phone, that.phone) &&
-                Objects.equals(gender, that.gender) &&
-                Objects.equals(dayOfBirth, that.dayOfBirth) &&
-                Objects.equals(state, that.state) &&
-                Objects.equals(city, that.city) &&
-                Objects.equals(zipCode, that.zipCode) &&
-                Objects.equals(serialNumber, that.serialNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, email, password, phone, gender, dayOfBirth, state, city, zipCode, serialNumber);
-    }
-
-    @Override
-    public String toString() {
-        return "ResponseUser{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", gender='" + gender + '\'' +
-                ", dayOfBirth=" + dayOfBirth +
-                ", state='" + state + '\'' +
-                ", city='" + city + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", serialNumber='" + serialNumber + '\'' +
-                '}';
     }
 }

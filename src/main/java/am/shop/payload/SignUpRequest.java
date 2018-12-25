@@ -1,9 +1,9 @@
-package am.shop.model.client_request;
+package am.shop.payload;
 
 import java.util.Date;
 
 
-public class RequestUser {
+public class SignUpRequest {
 
     private String firstName;
     private String lastName;
@@ -17,7 +17,7 @@ public class RequestUser {
     private String zipCode;
     private String serialNumber;
 
-    public RequestUser() {
+    public SignUpRequest() {
     }
 
 

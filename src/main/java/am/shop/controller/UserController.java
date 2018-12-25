@@ -1,7 +1,7 @@
 package am.shop.controller;
 
-import am.shop.model.client_request.RequestUser;
-import am.shop.model.client_response.ResponseUser;
+import am.shop.payload.SignUpRequest;
+import am.shop.response.ResponseUser;
 import am.shop.repository.UserRepository;
 import am.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
-
     private final UserService userService;
 
     @Autowired
@@ -23,8 +20,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/signup")
-    public ResponseUser signup(@RequestBody RequestUser users, ResponseUser responseUser) {
-        userService.save(users, responseUser);
-        return responseUser;
+    public ResponseUser signup(@RequestBody SignUpRequest users) {
+        return userService.save(users);
+
     }
 }
