@@ -1,19 +1,19 @@
 package am.shop.controller;
 
-
-import am.shop.model.Users;
+import am.shop.model.client_request.RequestUser;
+import am.shop.model.client_response.ResponseUser;
+import am.shop.repository.UserRepository;
 import am.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
-
 @RestController
 public class UserController {
+
+    @Autowired
+    UserRepository userRepository;
 
     private final UserService userService;
 
@@ -22,20 +22,9 @@ public class UserController {
         this.userService = userService;
     }
 
-
-    @GetMapping(value = "/allUsers")
-    public List<Users> users() {
-        return userService.findAll();
+    @PostMapping(value = "/signup")
+    public ResponseUser signup(@RequestBody RequestUser users, ResponseUser responseUser) {
+        userService.save(users, responseUser);
+        return responseUser;
     }
-
-    @PostMapping(value = "/register")
-    public Map<String, Object> registerNewUser(@RequestBody Users user) {
-        return userService.registerNewUser(user);
-    }
-
-    @PostMapping(value = "/login")
-    public Map<String, Object> userLogin(@RequestBody Users user) {
-        return userService.login(user);
-    }
-
 }

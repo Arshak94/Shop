@@ -1,67 +1,61 @@
 package am.shop.service;
 
-
-import am.shop.model.Token;
-import am.shop.model.Users;
+import am.shop.entity.Users;
+import am.shop.model.client_request.RequestUser;
+import am.shop.model.client_response.ResponseUser;
 import am.shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 @Service
 public class UserServiceImpl implements UserService {
 
-
     private final UserRepository userRepository;
-
-    private Users user = new Users();
-    private Map<String, Object> userMap = new HashMap<>();
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    @Override
-    public Optional<Users> findUserByEmail(String email) {
-        return userRepository.findUserByEmail(user.getEmail());
-    }
 
     @Override
-    public Map<String, Object> login(Users user) {
-        if (userRepository.findUserByEmail(user.getEmail()).isPresent()) {
-            if (userRepository.findUserByEmailAndPassword(user.getEmail(), user.getPassword())) {
-                userMap.put("success", "true");
-                userMap.put("message", "Login Successfully");
-                userMap.put("user", userRepository.getOne(user.getId()));
-                userMap.put("data", new Token());
-            }
-        } else {
-            userMap.put("success", "false");
-            userMap.put("Login failed", new Users());
-        }
-        return userMap;
+    public ResponseUser save(RequestUser userdata, ResponseUser responseUser) {
+        Users users = fromRequestUserToUsersTable(userdata);
+        userRepository.save(users);
+        responseUser = fromUserTableToResponseUser(users);
+        //Arshak jan stex chem karoxanum es metodic datan tam responseUser-in
+        return responseUser;
     }
-    @Override
-    public Map<String, Object> registerNewUser(Users user) {
-        if (userRepository.findUserByEmail(user.getEmail()).isPresent()) {
-            userMap.put("success", "false");
-            userMap.put("message", "Registration Failed,");
-            userMap.put("data", userRepository.findUserById(user.getId()));
-        } else {
-            userRepository.saveAndFlush(user);
-            userMap.put("success", "true");
-            userMap.put("message", "Registration Successfully");
-            userMap.put("user", user);
-            userMap.put("data", new Token());
-        }
-        return userMap;
+
+    private ResponseUser fromUserTableToResponseUser(Users userstable) {
+        ResponseUser responseUser = new ResponseUser();
+        userstable = userRepository.getOne(userstable.getId());
+        responseUser.setCity(userstable.getCity());
+        responseUser.setDayOfBirth(userstable.getDob());
+        responseUser.setEmail(userstable.getEmail());
+        responseUser.setFirstName(userstable.getFirstName());
+        responseUser.setLastName(userstable.getLastName());
+        responseUser.setGender(userstable.getGender());
+        responseUser.setPassword(userstable.getPassword());
+        responseUser.setSerialNumber(userstable.getSerialNumber());
+        responseUser.setZipCode(userstable.getZipCode());
+        responseUser.setState(userstable.getState());
+        responseUser.setPhone(userstable.getPhone());
+        return responseUser;
     }
-    @Override
-    public List<Users> findAll() {
-        return userRepository.findAll();
+
+    private Users fromRequestUserToUsersTable(RequestUser requestUser) {
+        Users usertable = new Users();
+        usertable.setCity(requestUser.getCity());
+        usertable.setDob(requestUser.getDayOfBirth());
+        usertable.setEmail(requestUser.getEmail());
+        usertable.setFirstName(requestUser.getFirstName());
+        usertable.setLastName(requestUser.getLastName());
+        usertable.setGender(requestUser.getGender());
+        usertable.setPassword(requestUser.getPassword());
+        usertable.setSerialNumber(requestUser.getSerialNumber());
+        usertable.setZipCode(requestUser.getZipCode());
+        usertable.setState(requestUser.getState());
+        usertable.setPhone(requestUser.getPhone());
+        return usertable;
     }
 }

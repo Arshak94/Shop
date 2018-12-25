@@ -1,17 +1,12 @@
 package am.shop.service;
 
 
-import am.shop.model.Users;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import am.shop.model.client_request.RequestUser;
+import am.shop.model.client_response.ResponseUser;
 
 public interface UserService {
 
-    Optional<Users> findUserByEmail(String email);
-    Map<String, Object> login(Users user);
-    Map<String, Object> registerNewUser(Users user);
-    List<Users> findAll();
+    //esi chishtn asac uzum ei void grei vorohetev indz tvum  a tenc chishta
+    ResponseUser save(RequestUser userdata, ResponseUser responseUser);
 
 }
